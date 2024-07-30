@@ -3,11 +3,10 @@ numpy
 matplotlib
 seaborn
 plotly
-scikit-surprise
+lightgbm
 requests
 scikit-learn
 xgboost
-
 fastapi
 uvicorn
 gunicorn==19.9.0
