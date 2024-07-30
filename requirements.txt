@@ -1,0 +1,15 @@
+pandas
+numpy
+matplotlib
+seaborn
+plotly
+scikit-surprise
+requests
+scikit-learn
+xgboost
+
+fastapi
+uvicorn
+gunicorn==19.9.0
+uvloop
+httptools
