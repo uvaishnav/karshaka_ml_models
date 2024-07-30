@@ -2,7 +2,7 @@ from pydantic import BaseModel
 
 # describes the Crop yeild prediction parameters
 class CropYield(BaseModel):
-    crop : str
+    Crop : str
     Avg_Nitrogen : float
     Avg_Phosphorous	: float
     Avg_Potassium	: float

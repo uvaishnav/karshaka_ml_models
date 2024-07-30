@@ -13,12 +13,12 @@ from preprocessor import log_normal_transform
 # 2. Create the app object
 app = FastAPI()
 
-# # load crop recomendation model
-# crop_recomendation = joblib.load("models/crop_recomend_model.pkl")
+# load crop recomendation model
+crop_recomendation = joblib.load("models/crop_recomend_model.pkl")
 
 
 # load preprocessor for yield prediction
-preprocessor = joblib.load("models/preprocessor.pkl", globals=globals())
+preprocessor = joblib.load("models/preprocessor.pkl")
 
 # yeild prediction model
 crop_yeild_prediction = joblib.load("models/best_RandomForest_model.pkl")
@@ -34,7 +34,7 @@ def get_yeild_prediction(data: CropYield):
     data_dict = data.dict()
     
     # Extract individual fields
-    crop = data_dict['crop']
+    Crop = data_dict['Crop']
     Avg_Nitrogen = data_dict['Avg_Nitrogen']
     Avg_Phosphorous = data_dict['Avg_Phosphorous']
     Avg_Potassium = data_dict['Avg_Potassium']
@@ -45,7 +45,7 @@ def get_yeild_prediction(data: CropYield):
     
     # Create a DataFrame from the input data
     input_data = pd.DataFrame({
-        'crop': [crop],
+        'Crop': [Crop],
         'Avg_Nitrogen': [Avg_Nitrogen],
         'Avg_Phosphorous': [Avg_Phosphorous],
         'Avg_Potassium': [Avg_Potassium],
@@ -63,7 +63,7 @@ def get_yeild_prediction(data: CropYield):
     
     # Return the prediction result
     return {
-        'prediction': prediction[0]
+        'prediction': np.exp(prediction[0])
     }
 
 # 5. Run the API with uvicorn
