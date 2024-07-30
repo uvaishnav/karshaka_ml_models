@@ -42,23 +42,46 @@ def get_crop_recomendation(data: CropRecomend):
     ph = data['ph']
     rainfall = data['rainfall']
 
-    prediction = crop_recomendation.predict([[N,P,K,temperature,humidity,ph,rainfall]])
+    probabilities = crop_recomendation.predict_proba([[N,P,K,temperature,humidity,ph,rainfall]])
 
-    if prediction==0:
-        prediction = 'banana'
-    elif prediction == 1:
-        prediction = 'coconut'
-    elif prediction == 2:
-        prediction = 'jute'
-    elif prediction == 3:
-        prediction = 'maize'
-    elif prediction == 4:
-        prediction = 'rice'
+    # Get the indices of the top two probabilities
+    top_two_indices = np.argsort(probabilities[0])[-2:][::-1]
+
+    first_crop = top_two_indices[0]
+    second_crop = top_two_indices[1]
+
+    # get first crop name
+    if first_crop==0:
+        first_crop = 'banana'
+    elif first_crop == 1:
+        first_crop = 'coconut'
+    elif first_crop == 2:
+        first_crop = 'jute'
+    elif first_crop == 3:
+        first_crop = 'maize'
+    elif first_crop == 4:
+        first_crop = 'rice'
     else:
-        prediction = 'none'
+        first_crop = 'none'
+
+    # get Second crop name
+    if second_crop==0:
+        second_crop = 'banana'
+    elif second_crop == 1:
+        second_crop = 'coconut'
+    elif second_crop == 2:
+        second_crop = 'jute'
+    elif second_crop == 3:
+        second_crop = 'maize'
+    elif second_crop == 4:
+        second_crop = 'rice'
+    else:
+        second_crop = 'none'
+
     
     return{
-        'prediction': prediction
+        'first_crop': first_crop,
+        'second_crop' : second_crop
     }
 
 @app.post('/predictYeild')
