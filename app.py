@@ -6,7 +6,7 @@ import numpy as np
 import pandas as pd
 import joblib
 
-from config import CropYield
+from config import CropYield, CropRecomend
 from preprocessor import log_normal_transform 
 
 
@@ -20,6 +20,9 @@ crop_recomendation = joblib.load("models/crop_recomend_model.pkl")
 # load preprocessor for yield prediction
 preprocessor = joblib.load("models/preprocessor.pkl")
 
+# Load scaler to Normalize the input for crop recomendation
+scaler = joblib.load("models/crop_recomend_scaler.pkl")
+
 # yeild prediction model
 crop_yeild_prediction = joblib.load("models/best_RandomForest_model.pkl")
 
@@ -27,6 +30,36 @@ crop_yeild_prediction = joblib.load("models/best_RandomForest_model.pkl")
 @app.get('/')
 def index():
     return {'message': 'Karshak Siksha'}
+
+@app.post('/recomendCrop')
+def get_crop_recomendation(data: CropRecomend):
+    data = data.dict()
+    N = data['N']
+    P = data['P']
+    K = data['K']
+    temperature = data['temperature']
+    humidity = data['humidity']
+    ph = data['ph']
+    rainfall = data['rainfall']
+
+    prediction = crop_recomendation.predict([[N,P,K,temperature,humidity,ph,rainfall]])
+
+    if prediction==0:
+        prediction = 'banana'
+    elif prediction == 1:
+        prediction = 'coconut'
+    elif prediction == 2:
+        prediction = 'jute'
+    elif prediction == 3:
+        prediction = 'maize'
+    elif prediction == 4:
+        prediction = 'rice'
+    else:
+        prediction = 'none'
+    
+    return{
+        'prediction': prediction
+    }
 
 @app.post('/predictYeild')
 def get_yeild_prediction(data: CropYield):
