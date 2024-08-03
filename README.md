@@ -119,6 +119,165 @@ The yield prediction model is designed to estimate the agricultural yield of cro
 ### 📊 Performance Metric
 - **RMSE for Random Forest**: 0.5483
 
+# 🌐 API Endpoints
 
+## 🌱 Crop Recommendation Model
 
+### 📍 Endpoint
+**POST**: `https://karshaka-ml-models.onrender.com/recomendCrop`
+
+### 📄 Sample Request Format
+
+```json
+{
+  "N": 20,
+  "P": 20,
+  "K": 40,
+  "temperature": 30,
+  "humidity": 50,
+  "ph": 8,
+  "rainfall": 120
+}
+```
+
+### 📋 Response Parameters
+- **first_crop**: The most suitable crop (string)
+- **second_crop**: The second most suitable crop (string)
+
+### 💻 Use it in Your Python Code
+```python
+import requests
+
+url = "https://karshaka-ml-models.onrender.com/recomendCrop"
+payload = {
+    "N": ,  # fill with your value
+    "P": ,  # fill with your value
+    "K": ,  # fill with your value
+    "temperature": ,  # fill with your value
+    "humidity": ,  # fill with your value
+    "ph": ,  # fill with your value
+    "rainfall":  # fill with your value
+}
+
+response = requests.post(url, json=payload)
+
+if response.status_code == 200:
+    data = response.json()
+    print("First Crop:", data['first_crop'])
+    print("Second Crop:", data['second_crop'])
+else:
+    print("Error:", response.status_code, response.text)
+```
+
+### 💻 Use it in Your JavaScript Code
+```javascript
+const url = "https://karshaka-ml-models.onrender.com/recomendCrop";
+
+const payload = {
+  "N": ,  // fill with your value
+  "P": ,  // fill with your value
+  "K": ,  // fill with your value
+  "temperature": ,  // fill with your value
+  "humidity": ,  // fill with your value
+  "ph": ,  // fill with your value
+  "rainfall":  // fill with your value
+};
+
+fetch(url, {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json"
+  },
+  body: JSON.stringify(payload)
+})
+  .then(response => response.json())
+  .then(data => {
+    console.log("First Crop:", data.first_crop);
+    console.log("Second Crop:", data.second_crop);
+  })
+  .catch(error => {
+    console.error("Error:", error);
+  });
+```
+
+## 🌱 Yield Prediction Model
+
+#### 📍 Endpoint
+**POST**: `https://karshaka-ml-models.onrender.com/predictYeild`
+
+This endpoint predicts the yield, crop can make  based on soil and weather parameters.
+
+#### 📄 Sample Request
+
+```json
+{
+  "Crop": "rice",
+  "Avg_Nitrogen": 80,
+  "Avg_Phosphorous": 40,
+  "Avg_Potassium": 30,
+  "pH": 6,
+  "temperature": 30,
+  "humidity": 80,
+  "rainfall": 220
+}
+```
+
+### 📋 Response Parameters
+- **prediction**: The predicted yield of the crop (float)
+
+### 💻 Use it in Your Python Code
+```python
+import requests
+
+url = "https://karshaka-ml-models.onrender.com/predictYeild"
+payload = {
+    "Crop": ,  # fill with your value
+    "Avg_Nitrogen": ,  # fill with your value
+    "Avg_Phosphorous": ,  # fill with your value
+    "Avg_Potassium": ,  # fill with your value
+    "pH": ,  # fill with your value
+    "temperature": ,  # fill with your value
+    "humidity": ,  # fill with your value
+    "rainfall":  # fill with your value
+}
+
+response = requests.post(url, json=payload)
+
+if response.status_code == 200:
+    data = response.json()
+    print("Predicted Yield:", data['prediction'])
+else:
+    print("Error:", response.status_code, response.text)
+```
+
+### 💻 Use it in Your JavaScript Code
+```javascript
+const url = "https://karshaka-ml-models.onrender.com/predictYeild";
+
+const payload = {
+  "Crop": ,  // fill with your value
+  "Avg_Nitrogen": ,  // fill with your value
+  "Avg_Phosphorous": ,  // fill with your value
+  "Avg_Potassium": ,  // fill with your value
+  "pH": ,  // fill with your value
+  "temperature": ,  // fill with your value
+  "humidity": ,  // fill with your value
+  "rainfall":  // fill with your value
+};
+
+fetch(url, {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json"
+  },
+  body: JSON.stringify(payload)
+})
+  .then(response => response.json())
+  .then(data => {
+    console.log("Predicted Yield:", data.prediction);
+  })
+  .catch(error => {
+    console.error("Error:", error);
+  });
+```
 
